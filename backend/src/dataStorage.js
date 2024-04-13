@@ -4,6 +4,7 @@ const data = [
     title: 'First List',
     todos: [{
       id: '1',
+      done: false,
       text: 'First todo of first list!'
     }],
   }, {
@@ -11,6 +12,7 @@ const data = [
     title: 'Second List',
     todos: [{
       id: '1',
+      done: false,
       text: 'First todo of second list!',
     }],
   }
@@ -39,8 +41,7 @@ const removeTodo = (listId, todoId) => {
 
 const updateTodo = (listId, updatedTodo) => {
   const list = data.find((list) => list.id === listId);
-  const todo = list.todos.find((todo) => todo.id === updatedTodo.id);
-  todo.text = updatedTodo.text;
+  list.todos = list.todos.map((todo) => todo.id === updatedTodo.id ? updatedTodo : todo);
   return list.todos;
 }
 
