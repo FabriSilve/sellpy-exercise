@@ -6,8 +6,8 @@ import {
   Box,
 } from '@mui/material'
 
-import { TodoLists } from './todos/components/TodoLists'
-import { TodoListForm } from './todos/components/TodoListForm'
+import TodoLists from './todos/components/TodoLists'
+import TodoListForm from './todos/components/TodoListForm'
 
 const App = () => {
   return (

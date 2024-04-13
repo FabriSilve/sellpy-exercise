@@ -13,7 +13,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { useDataContext } from '../../DataContext'
 
-export const TodoLists = ({ style }) => {
+const TodoLists = ({ style }) => {
   const {
     isLoading,
     lists,
@@ -39,3 +39,5 @@ export const TodoLists = ({ style }) => {
     </Card>
   )
 }
+
+export default TodoLists

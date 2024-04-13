@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { useDataContext } from '../../DataContext'
 
-export const TodoListForm = () => {
+const TodoListForm = () => {
   const {
     isLoading,
     activeList,
@@ -94,3 +94,5 @@ export const TodoListForm = () => {
     </Card>
   )
 }
+
+export default TodoListForm
