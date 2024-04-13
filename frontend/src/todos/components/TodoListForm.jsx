@@ -12,9 +12,14 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import dayjs from 'dayjs'
 
 import { useDataContext } from '../../DataContext'
+import {
+  getDueDate,
+  isLate,
+  dueStatus,
+  getDueDateFormatted,
+} from '../../utils'
 
 const TodoListForm = () => {
   const {
@@ -50,7 +55,7 @@ const TodoListForm = () => {
   }, [updateTodo])
 
   const handleUpdateTodoDue = useCallback((todo) => (date) => {
-    const updatedTodo = { ...todo, due: date.format('DD/MM/YYYY') }
+    const updatedTodo = { ...todo, due: getDueDateFormatted(date) }
     updateTodo(updatedTodo);
   }, [updateTodo])
 
@@ -69,38 +74,60 @@ const TodoListForm = () => {
             <Box
               key={todo.id}
               display='flex'
-              alignItems='center'
-              padding='0 1rem'
-              marginTop='1rem'
-              gap={1}
+              flexDirection='column'
+              alignItems='stretch'
             >
-              <Typography sx={{ margin: '8px' }} variant='h6'>
-                {index + 1}
-              </Typography>
-              <Checkbox
-                checked={todo.done}
-                onChange={handleUpdateTodoStatus(todo)}
-                inputProps={{ 'aria-label': 'controlled' }}
-                size='large'
-              />
-              <TextField
-                sx={{ flexGrow: 2 }}
-                label='What to do?'
-                value={todo.text}
-                onChange={handleUpdateTodoText(todo)}
-              />
-              <DatePicker
-                label='Due day?'
-                value={todo.due ? dayjs(todo.due, 'DD/MM/YYYY') : null}
-                onChange={handleUpdateTodoDue(todo)}
-              />
-              <Button
-                size='small'
-                color='error'
-                onClick={handleDeleteTodo(todo)}
+              <Box
+                display='flex'
+                alignItems='center'
+                padding='0 1rem'
+                marginTop='1rem'
+                gap={1}
               >
-                <DeleteIcon fontSize="large"/>
-              </Button>
+                <Typography variant='h6'>
+                  {index + 1}
+                </Typography>
+                <Checkbox
+                  checked={todo.done}
+                  onChange={handleUpdateTodoStatus(todo)}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                  size='large'
+                />
+                <TextField
+                  sx={{ flexGrow: 2 }}
+                  label='What to do?'
+                  value={todo.text}
+                  onChange={handleUpdateTodoText(todo)}
+                />
+                <DatePicker
+                  label='Due day?'
+                  value={getDueDate(todo.due)}
+                  onChange={handleUpdateTodoDue(todo)}
+                  slotProps={{
+                    textField: {
+                      error: isLate(todo),
+                    },
+                    actionBar: {
+                      actions: ['clear']
+                    }
+                  }}
+                />
+                <Button
+                  size='small'
+                  color='error'
+                  onClick={handleDeleteTodo(todo)}
+                >
+                  <DeleteIcon fontSize="large"/>
+                </Button>
+              </Box>
+              <Typography
+                variant='body2'
+                align='right'
+                color={isLate(todo) ? 'error' : 'grey'}
+                marginRight='6rem'
+              >
+                {dueStatus(todo)}
+              </Typography>
             </Box>
           ))}
           <CardActions>
