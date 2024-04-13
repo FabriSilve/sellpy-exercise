@@ -2,10 +2,12 @@ import {
   createContext,
   useState,
   useContext,
-
+  useEffect,
 } from 'react'
 
 const Context = createContext({});
+
+const HOST = 'http://localhost:3001';
 
 export const DataContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -14,7 +16,16 @@ export const DataContext = ({ children }) => {
 
   const [todos, setTodos] = useState([])
 
-
+  useEffect(() => {
+    const fetchLists = async () => {
+      setIsLoading(true)
+      const response = await fetch(`${HOST}/list`)
+      const data = await response.json()
+      setLists(data)
+      setIsLoading(false)
+    };
+    fetchLists()
+  }, []);
 
   const context = {
     isLoading,
