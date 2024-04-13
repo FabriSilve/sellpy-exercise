@@ -82,7 +82,7 @@ export const DataContext = ({ children }) => {
     return () => clearTimeout(timeoutID);
   }, [todoToUpdate, activeList]);
 
-  const updateTodoStatus = useCallback((todo) => {
+  const updateTodo = useCallback((todo) => {
     const updateTodoRequest = async () => {
       if (!activeList) return
       const todos = await updateTodoApi(activeList.id, todo)
@@ -102,7 +102,7 @@ export const DataContext = ({ children }) => {
     addTodo,
     deleteTodo,
     updateTodoDelayed,
-    updateTodoStatus,
+    updateTodo,
   }
 
   return (

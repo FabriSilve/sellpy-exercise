@@ -11,6 +11,9 @@ import {
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import dayjs from 'dayjs'
+
 import { useDataContext } from '../../DataContext'
 
 const TodoListForm = () => {
@@ -21,7 +24,7 @@ const TodoListForm = () => {
     addTodo,
     deleteTodo,
     updateTodoDelayed,
-    updateTodoStatus,
+    updateTodo,
   } = useDataContext();
 
   const handleAddTodo = useCallback((event) => {
@@ -43,8 +46,13 @@ const TodoListForm = () => {
   const handleUpdateTodoStatus = useCallback((todo) => (event) => {
     event.preventDefault()
     const updatedTodo = { ...todo, done: event.target.checked }
-    updateTodoStatus(updatedTodo);
-  }, [updateTodoStatus])
+    updateTodo(updatedTodo);
+  }, [updateTodo])
+
+  const handleUpdateTodoDue = useCallback((todo) => (date) => {
+    const updatedTodo = { ...todo, due: date.format('DD/MM/YYYY') }
+    updateTodo(updatedTodo);
+  }, [updateTodo])
 
   if (isLoading || !activeList) return null
 
@@ -72,6 +80,12 @@ const TodoListForm = () => {
                 label='What to do?'
                 value={todo.text}
                 onChange={handleUpdateTodoText(todo)}
+              />
+              <DatePicker
+                sx={{ marginTop: '1rem' }}
+                label='Due day?'
+                value={todo.due ? dayjs(todo.due, 'DD/MM/YYYY') : null}
+                onChange={handleUpdateTodoDue(todo)}
               />
               <Button
                 sx={{ margin: '8px' }}
