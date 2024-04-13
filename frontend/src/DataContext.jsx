@@ -3,6 +3,7 @@ import {
   useState,
   useContext,
   useEffect,
+  useCallback,
 } from 'react'
 
 const Context = createContext({});
@@ -39,12 +40,29 @@ export const DataContext = ({ children }) => {
     fetchTodos()
   }, [activeList, setTodos])
 
+  const addTodo = useCallback((todo) => {
+    const addTodoRequest = async () => {
+      if (!activeList) return
+      const response = await fetch(`${HOST}/list/${activeList.id}/todo`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(todo)
+      })
+      const data = await response.json()
+      setTodos(data)
+    }
+    addTodoRequest()
+  }, [activeList])
+
   const context = {
     isLoading,
     lists,
     activeList,
     setActiveList,
     todos,
+    addTodo,
   }
 
   return (

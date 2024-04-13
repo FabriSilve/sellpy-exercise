@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { TextField, Card, CardContent, CardActions, Button, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
@@ -9,7 +9,13 @@ export const TodoListForm = () => {
     isLoading,
     activeList,
     todos,
+    addTodo,
   } = useDataContext();
+
+  const handleAddTodo = useCallback((event) => {
+    event.preventDefault()
+    addTodo({ text: '' })
+  }, [addTodo])
 
   if (isLoading || !activeList) return null
 
@@ -59,9 +65,7 @@ export const TodoListForm = () => {
             <Button
               type='button'
               color='primary'
-              onClick={() => {
-                // setTodos([...todos, ''])
-              }}
+              onClick={handleAddTodo}
             >
               Add Todo <AddIcon />
             </Button>
