@@ -37,10 +37,8 @@ export const DataContext = ({ children }) => {
   useEffect(() => {
     const fetchTodos = async () => {
       if (!activeList) return
-      setIsLoading(true)
       const data = await fetchTodosApi(activeList.id)
       setTodos(data)
-      setIsLoading(false)
     };
     fetchTodos()
   }, [activeList, setTodos])
