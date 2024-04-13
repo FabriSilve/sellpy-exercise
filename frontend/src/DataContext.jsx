@@ -48,8 +48,10 @@ export const DataContext = ({ children }) => {
   const addTodo = useCallback((todo) => {
     const addTodoRequest = async () => {
       if (!activeList) return
-      const data = await createTodoApi(activeList.id, todo)
-      setTodos(data)
+      const todos = await createTodoApi(activeList.id, todo)
+      const lists = await fetchListsApi()
+      setTodos(todos)
+      setLists(lists)
     }
     addTodoRequest()
   }, [activeList])
@@ -57,8 +59,10 @@ export const DataContext = ({ children }) => {
   const deleteTodo = useCallback((todo) => {
     const deleteTodoRequest = async () => {
       if (!activeList) return
-      const data = await deleteTodoApi(activeList.id, todo.id)
-      setTodos(data)
+      const todos = await deleteTodoApi(activeList.id, todo.id)
+      const lists = await fetchListsApi()
+      setTodos(todos)
+      setLists(lists)
     }
     deleteTodoRequest()
   }, [activeList]);
