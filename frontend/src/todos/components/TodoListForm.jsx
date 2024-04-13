@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
   Checkbox,
+  Box,
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
@@ -51,11 +52,13 @@ const TodoListForm = () => {
     <Card sx={{ margin: '0 1rem' }}>
       <CardContent>
         <Typography component='h2'>{activeList.title}</Typography>
-        <form
-          style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+        <Box
+          display='flex'
+          flexDirection='column'
+          flexGrow={1}
         >
           {todos.map((todo, index) => (
-            <div key={todo.id} style={{ display: 'flex', alignItems: 'center' }}>
+            <Box key={todo.id} display="flex" alignItems="center" >
               <Typography sx={{ margin: '8px' }} variant='h6'>
                 {index + 1}
               </Typography>
@@ -78,7 +81,7 @@ const TodoListForm = () => {
               >
                 <DeleteIcon />
               </Button>
-            </div>
+            </Box>
           ))}
           <CardActions>
             <Button
@@ -89,7 +92,7 @@ const TodoListForm = () => {
               Add Todo <AddIcon />
             </Button>
           </CardActions>
-        </form>
+        </Box>
       </CardContent>
     </Card>
   )
