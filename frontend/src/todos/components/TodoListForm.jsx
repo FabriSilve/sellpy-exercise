@@ -11,6 +11,7 @@ export const TodoListForm = () => {
     todos,
     addTodo,
     deleteTodo,
+    updateTodo,
   } = useDataContext();
 
   const handleAddTodo = useCallback((event) => {
@@ -23,6 +24,12 @@ export const TodoListForm = () => {
     deleteTodo(todo);
   }, [deleteTodo])
 
+  const handleUpdateTodo = useCallback((todo) => (event) => {
+    event.preventDefault()
+    const updatedTodo = { ...todo, text: event.target.value }
+    updateTodo(updatedTodo);
+  }, [updateTodo])
+
   if (isLoading || !activeList) return null
 
   return (
@@ -30,7 +37,6 @@ export const TodoListForm = () => {
       <CardContent>
         <Typography component='h2'>{activeList.title}</Typography>
         <form
-          onSubmit={() => null}
           style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
         >
           {todos.map((todo) => (
@@ -42,14 +48,7 @@ export const TodoListForm = () => {
                 sx={{ flexGrow: 1, marginTop: '1rem' }}
                 label='What to do?'
                 value={todo.text}
-                onChange={(event) => {
-                  // setTodos([
-                  //   // immutable update
-                  //   ...todos.slice(0, index),
-                  //   event.target.value,
-                  //   ...todos.slice(index + 1),
-                  // ])
-                }}
+                onChange={handleUpdateTodo(todo)}
               />
               <Button
                 sx={{ margin: '8px' }}
@@ -68,9 +67,6 @@ export const TodoListForm = () => {
               onClick={handleAddTodo}
             >
               Add Todo <AddIcon />
-            </Button>
-            <Button type='submit' variant='contained' color='primary'>
-              Save
             </Button>
           </CardActions>
         </form>

@@ -37,9 +37,17 @@ const removeTodo = (listId, todoId) => {
   return list.todos;
 }
 
+const updateTodo = (listId, updatedTodo) => {
+  const list = data.find((list) => list.id === listId);
+  const todo = list.todos.find((todo) => todo.id === updatedTodo.id);
+  todo.text = updatedTodo.text;
+  return list.todos;
+}
+
 module.exports = {
   getLists,
   getTodos,
   addTodo,
   removeTodo,
+  updateTodo,
 }

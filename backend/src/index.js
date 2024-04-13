@@ -31,4 +31,13 @@ app.delete('/list/:id/todo/:todoId', (req, res) => {
   res.json(dataStorage.removeTodo(id, todoId));
 })
 
+app.put('/list/:id/todo/:todoId', (req, res) => {
+  const { id, todoId } = req.params;
+  if (todoId !== req.body.id) {
+    res.status(400).json({ error: 'Todo id in path does not match todo id in body' });
+  }
+  const todo = req.body;
+  res.json(dataStorage.updateTodo(id, todo));
+})
+
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
