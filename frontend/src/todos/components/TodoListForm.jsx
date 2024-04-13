@@ -40,7 +40,6 @@ export const TodoListForm = () => {
 
   const handleUpdateTodoStatus = useCallback((todo) => (event) => {
     event.preventDefault()
-    console.log(event.target.checked)
     const updatedTodo = { ...todo, done: event.target.checked }
     updateTodo(updatedTodo);
   }, [updateTodo])
