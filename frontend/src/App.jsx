@@ -5,7 +5,9 @@ import {
   Typography,
   Box,
 } from '@mui/material'
+
 import { TodoLists } from './todos/components/TodoLists'
+import { TodoListForm } from './todos/components/TodoListForm'
 
 const App = () => {
   return (
@@ -25,6 +27,7 @@ const App = () => {
           flexGrow={1}
         >
           <TodoLists />
+          <TodoListForm />
         </Box>
       </Box>
     </Box>
