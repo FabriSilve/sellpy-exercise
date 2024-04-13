@@ -16,6 +16,7 @@ export const DataContext = ({ children }) => {
   const [activeList, setActiveList] = useState(null)
 
   const [todos, setTodos] = useState([])
+  const [todoToUpdate, setTodoToUpdate] = useState(null)
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -69,20 +70,26 @@ export const DataContext = ({ children }) => {
   }, [activeList]);
 
   const updateTodo = useCallback((todo) => {
-    const updateTodoRequest = async () => {
-      if (!activeList) return
-      const response = await fetch(`${HOST}/list/${activeList.id}/todo/${todo.id}`, {
+    if (!activeList) return
+    setTodoToUpdate(todo)
+    setTodos(todos.map((t) => t.id === todo.id ? todo : t))
+  }, [setTodoToUpdate, activeList, todos])
+
+  useEffect(() => {
+    const timeoutID = setTimeout(async () => {
+      if (!activeList || !todoToUpdate) return
+      const response = await fetch(`${HOST}/list/${activeList.id}/todo/${todoToUpdate.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(todo)
+        body: JSON.stringify(todoToUpdate)
       })
       const data = await response.json()
       setTodos(data)
-    }
-    updateTodoRequest()
-  }, [activeList])
+    }, 500);
+    return () => clearTimeout(timeoutID);
+  }, [todoToUpdate, activeList]);
 
   const context = {
     isLoading,
