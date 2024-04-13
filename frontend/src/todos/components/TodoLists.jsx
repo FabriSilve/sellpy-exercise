@@ -9,6 +9,8 @@ import {
   Typography,
 } from '@mui/material'
 import ReceiptIcon from '@mui/icons-material/Receipt'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import { TodoListForm } from './TodoListForm'
 import { useDataContext } from '../../DataContext'
 
@@ -30,7 +32,7 @@ export const TodoLists = ({ style }) => {
             {lists.map((list) => (
               <ListItemButton key={list.id} onClick={() => setActiveList(list)}>
                 <ListItemIcon>
-                  <ReceiptIcon />
+                  {list.done ? <CheckCircleIcon color="success" /> : <ReceiptIcon />}
                 </ListItemIcon>
                 <ListItemText primary={list.title} />
               </ListItemButton>

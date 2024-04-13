@@ -9,7 +9,7 @@ app.use(express.json())
 
 const PORT = 3001
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (_req, res) => res.send('Hello World!'))
 
 app.get('/list', (_req, res) => {
   res.json(dataStorage.getLists());

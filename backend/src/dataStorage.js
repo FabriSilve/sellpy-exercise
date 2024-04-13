@@ -19,7 +19,11 @@ const data = [
 ];
 
 const getLists = () => {
-  return data.map((list) => ({ id: list.id, title: list.title }))
+  return data.map((list) => ({
+    id: list.id,
+    title: list.title,
+    done: list.todos.every((todo) => todo.done),
+  }))
 }
 
 const getTodos = (listId) => {
