@@ -54,10 +54,10 @@ export const TodoListForm = () => {
         <form
           style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
         >
-          {todos.map((todo) => (
+          {todos.map((todo, index) => (
             <div key={todo.id} style={{ display: 'flex', alignItems: 'center' }}>
               <Typography sx={{ margin: '8px' }} variant='h6'>
-                {todo.id}
+                {index + 1}
               </Typography>
               <Checkbox
                 checked={todo.done}
