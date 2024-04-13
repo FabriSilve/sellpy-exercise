@@ -29,7 +29,7 @@ const getTodos = (listId) => {
 
 const addTodo = (listId, todo) => {
   const list = data.find((list) => list.id === listId);
-  list.todos.push({ ...todo, id: `${list.todos.length + 1}` });
+  list.todos.push({ ...todo, id: `${list.todos.length + 1}`, done: false });
   return list.todos;
 }
 

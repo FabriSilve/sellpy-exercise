@@ -24,7 +24,7 @@ export const TodoListForm = () => {
 
   const handleAddTodo = useCallback((event) => {
     event.preventDefault()
-    addTodo({ text: ''})
+    addTodo({ text: '' })
   }, [addTodo])
 
   const handleDeleteTodo = useCallback((todo) => (event) => {
