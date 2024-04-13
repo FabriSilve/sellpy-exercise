@@ -1,5 +1,13 @@
 import React, { useCallback } from 'react'
-import { TextField, Card, CardContent, CardActions, Button, Typography } from '@mui/material'
+import {
+  TextField,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+  Checkbox,
+} from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 import { useDataContext } from '../../DataContext'
@@ -16,7 +24,7 @@ export const TodoListForm = () => {
 
   const handleAddTodo = useCallback((event) => {
     event.preventDefault()
-    addTodo({ text: '' })
+    addTodo({ text: ''})
   }, [addTodo])
 
   const handleDeleteTodo = useCallback((todo) => (event) => {
@@ -24,9 +32,16 @@ export const TodoListForm = () => {
     deleteTodo(todo);
   }, [deleteTodo])
 
-  const handleUpdateTodo = useCallback((todo) => (event) => {
+  const handleUpdateTodoText = useCallback((todo) => (event) => {
     event.preventDefault()
     const updatedTodo = { ...todo, text: event.target.value }
+    updateTodo(updatedTodo);
+  }, [updateTodo])
+
+  const handleUpdateTodoStatus = useCallback((todo) => (event) => {
+    event.preventDefault()
+    console.log(event.target.checked)
+    const updatedTodo = { ...todo, done: event.target.checked }
     updateTodo(updatedTodo);
   }, [updateTodo])
 
@@ -44,11 +59,16 @@ export const TodoListForm = () => {
               <Typography sx={{ margin: '8px' }} variant='h6'>
                 {todo.id}
               </Typography>
+              <Checkbox
+                checked={todo.done}
+                onChange={handleUpdateTodoStatus(todo)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
               <TextField
                 sx={{ flexGrow: 1, marginTop: '1rem' }}
                 label='What to do?'
                 value={todo.text}
-                onChange={handleUpdateTodo(todo)}
+                onChange={handleUpdateTodoText(todo)}
               />
               <Button
                 sx={{ margin: '8px' }}
