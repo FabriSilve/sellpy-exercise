@@ -25,7 +25,19 @@ export const DataContext = ({ children }) => {
       setIsLoading(false)
     };
     fetchLists()
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    const fetchTodos = async () => {
+      if (!activeList) return
+      setIsLoading(true)
+      const response = await fetch(`${HOST}/list/${activeList.id}/todo`)
+      const data = await response.json()
+      setTodos(data)
+      setIsLoading(false)
+    };
+    fetchTodos()
+  }, [activeList, setTodos])
 
   const context = {
     isLoading,
