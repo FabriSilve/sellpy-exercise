@@ -3,7 +3,7 @@ const data = [
     id: 'L1',
     title: 'First List',
     todos: [{
-      id: '1',
+      id: `${Date.now()}`,
       done: false,
       text: 'First todo of first list!'
     }],
@@ -11,7 +11,7 @@ const data = [
     id: 'L2',
     title: 'Second List',
     todos: [{
-      id: '1',
+      id: `${Date.now()}`,
       done: false,
       text: 'First todo of second list!',
     }],
