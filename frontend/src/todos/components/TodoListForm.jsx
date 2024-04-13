@@ -19,7 +19,8 @@ export const TodoListForm = () => {
     todos,
     addTodo,
     deleteTodo,
-    updateTodo,
+    updateTodoDelayed,
+    updateTodoStatus,
   } = useDataContext();
 
   const handleAddTodo = useCallback((event) => {
@@ -35,14 +36,14 @@ export const TodoListForm = () => {
   const handleUpdateTodoText = useCallback((todo) => (event) => {
     event.preventDefault()
     const updatedTodo = { ...todo, text: event.target.value }
-    updateTodo(updatedTodo);
-  }, [updateTodo])
+    updateTodoDelayed(updatedTodo);
+  }, [updateTodoDelayed])
 
   const handleUpdateTodoStatus = useCallback((todo) => (event) => {
     event.preventDefault()
     const updatedTodo = { ...todo, done: event.target.checked }
-    updateTodo(updatedTodo);
-  }, [updateTodo])
+    updateTodoStatus(updatedTodo);
+  }, [updateTodoStatus])
 
   if (isLoading || !activeList) return null
 

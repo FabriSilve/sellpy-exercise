@@ -63,7 +63,7 @@ export const DataContext = ({ children }) => {
     deleteTodoRequest()
   }, [activeList]);
 
-  const updateTodo = useCallback((todo) => {
+  const updateTodoDelayed = useCallback((todo) => {
     if (!activeList) return
     setTodoToUpdate(todo)
     setTodos(todos.map((t) => t.id === todo.id ? todo : t))
@@ -78,6 +78,17 @@ export const DataContext = ({ children }) => {
     return () => clearTimeout(timeoutID);
   }, [todoToUpdate, activeList]);
 
+  const updateTodoStatus = useCallback((todo) => {
+    const updateTodoRequest = async () => {
+      if (!activeList) return
+      const todos = await updateTodoApi(activeList.id, todo)
+      const lists = await fetchListsApi()
+      setTodos(todos)
+      setLists(lists)
+    }
+    updateTodoRequest()
+  }, [activeList])
+
   const context = {
     isLoading,
     lists,
@@ -86,7 +97,8 @@ export const DataContext = ({ children }) => {
     todos,
     addTodo,
     deleteTodo,
-    updateTodo,
+    updateTodoDelayed,
+    updateTodoStatus,
   }
 
   return (
