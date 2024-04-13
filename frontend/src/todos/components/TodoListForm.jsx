@@ -68,7 +68,7 @@ const TodoListForm = () => {
         <Box
           display='flex'
           flexDirection='column'
-          flexGrow={1}
+          gap={1}
         >
           {todos.map((todo, index) => (
             <Box
@@ -81,7 +81,6 @@ const TodoListForm = () => {
                 display='flex'
                 alignItems='center'
                 padding='0 1rem'
-                marginTop='1rem'
                 gap={1}
               >
                 <Typography variant='h6'>
