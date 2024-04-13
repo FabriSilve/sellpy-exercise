@@ -56,6 +56,18 @@ export const DataContext = ({ children }) => {
     addTodoRequest()
   }, [activeList])
 
+  const deleteTodo = useCallback((todo) => {
+    const deleteTodoRequest = async () => {
+      if (!activeList) return
+      const response = await fetch(`${HOST}/list/${activeList.id}/todo/${todo.id}`, {
+        method: 'DELETE',
+      })
+      const data = await response.json()
+      setTodos(data)
+    }
+    deleteTodoRequest()
+  }, [activeList]);
+
   const context = {
     isLoading,
     lists,
@@ -63,6 +75,7 @@ export const DataContext = ({ children }) => {
     setActiveList,
     todos,
     addTodo,
+    deleteTodo,
   }
 
   return (

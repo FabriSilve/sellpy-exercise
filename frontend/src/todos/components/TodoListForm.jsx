@@ -10,12 +10,18 @@ export const TodoListForm = () => {
     activeList,
     todos,
     addTodo,
+    deleteTodo,
   } = useDataContext();
 
   const handleAddTodo = useCallback((event) => {
     event.preventDefault()
     addTodo({ text: '' })
   }, [addTodo])
+
+  const handleDeleteTodo = useCallback((todo) => (event) => {
+    event.preventDefault()
+    deleteTodo(todo);
+  }, [deleteTodo])
 
   if (isLoading || !activeList) return null
 
@@ -49,13 +55,7 @@ export const TodoListForm = () => {
                 sx={{ margin: '8px' }}
                 size='small'
                 color='secondary'
-                onClick={() => {
-                  // setTodos([
-                  //   // immutable delete
-                  //   ...todos.slice(0, index),
-                  //   ...todos.slice(index + 1),
-                  // ])
-                }}
+                onClick={handleDeleteTodo(todo)}
               >
                 <DeleteIcon />
               </Button>
