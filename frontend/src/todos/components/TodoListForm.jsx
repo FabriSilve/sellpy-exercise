@@ -66,7 +66,14 @@ const TodoListForm = () => {
           flexGrow={1}
         >
           {todos.map((todo, index) => (
-            <Box key={todo.id} display="flex" alignItems="center" >
+            <Box
+              key={todo.id}
+              display='flex'
+              alignItems='center'
+              padding='0 1rem'
+              marginTop='1rem'
+              gap={1}
+            >
               <Typography sx={{ margin: '8px' }} variant='h6'>
                 {index + 1}
               </Typography>
@@ -74,26 +81,25 @@ const TodoListForm = () => {
                 checked={todo.done}
                 onChange={handleUpdateTodoStatus(todo)}
                 inputProps={{ 'aria-label': 'controlled' }}
+                size='large'
               />
               <TextField
-                sx={{ flexGrow: 1, marginTop: '1rem' }}
+                sx={{ flexGrow: 2 }}
                 label='What to do?'
                 value={todo.text}
                 onChange={handleUpdateTodoText(todo)}
               />
               <DatePicker
-                sx={{ marginTop: '1rem' }}
                 label='Due day?'
                 value={todo.due ? dayjs(todo.due, 'DD/MM/YYYY') : null}
                 onChange={handleUpdateTodoDue(todo)}
               />
               <Button
-                sx={{ margin: '8px' }}
                 size='small'
-                color='secondary'
+                color='error'
                 onClick={handleDeleteTodo(todo)}
               >
-                <DeleteIcon />
+                <DeleteIcon fontSize="large"/>
               </Button>
             </Box>
           ))}
