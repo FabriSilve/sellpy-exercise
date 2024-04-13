@@ -1,3 +1,6 @@
+### Result
+<img src="result.gif" />
+
 # Sellpy web interview
 
 Welcome to Sellpy's web interview repo!
