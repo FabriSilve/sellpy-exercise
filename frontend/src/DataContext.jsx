@@ -6,9 +6,15 @@ import {
   useCallback,
 } from 'react'
 
-const Context = createContext({});
+import {
+  fetchListsApi,
+  fetchTodosApi,
+  createTodoApi,
+  deleteTodoApi,
+  updateTodoApi,
+} from './requests'
 
-const HOST = 'http://localhost:3001';
+const Context = createContext({});
 
 export const DataContext = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -21,8 +27,7 @@ export const DataContext = ({ children }) => {
   useEffect(() => {
     const fetchLists = async () => {
       setIsLoading(true)
-      const response = await fetch(`${HOST}/list`)
-      const data = await response.json()
+      const data = await fetchListsApi()
       setLists(data)
       setIsLoading(false)
     };
@@ -33,8 +38,7 @@ export const DataContext = ({ children }) => {
     const fetchTodos = async () => {
       if (!activeList) return
       setIsLoading(true)
-      const response = await fetch(`${HOST}/list/${activeList.id}/todo`)
-      const data = await response.json()
+      const data = await fetchTodosApi(activeList.id)
       setTodos(data)
       setIsLoading(false)
     };
@@ -44,14 +48,7 @@ export const DataContext = ({ children }) => {
   const addTodo = useCallback((todo) => {
     const addTodoRequest = async () => {
       if (!activeList) return
-      const response = await fetch(`${HOST}/list/${activeList.id}/todo`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(todo)
-      })
-      const data = await response.json()
+      const data = await createTodoApi(activeList.id, todo)
       setTodos(data)
     }
     addTodoRequest()
@@ -60,10 +57,7 @@ export const DataContext = ({ children }) => {
   const deleteTodo = useCallback((todo) => {
     const deleteTodoRequest = async () => {
       if (!activeList) return
-      const response = await fetch(`${HOST}/list/${activeList.id}/todo/${todo.id}`, {
-        method: 'DELETE',
-      })
-      const data = await response.json()
+      const data = await deleteTodoApi(activeList.id, todo.id)
       setTodos(data)
     }
     deleteTodoRequest()
@@ -78,14 +72,7 @@ export const DataContext = ({ children }) => {
   useEffect(() => {
     const timeoutID = setTimeout(async () => {
       if (!activeList || !todoToUpdate) return
-      const response = await fetch(`${HOST}/list/${activeList.id}/todo/${todoToUpdate.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(todoToUpdate)
-      })
-      const data = await response.json()
+      const data = await updateTodoApi(activeList.id, todoToUpdate)
       setTodos(data)
     }, 500);
     return () => clearTimeout(timeoutID);
