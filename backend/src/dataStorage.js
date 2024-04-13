@@ -1,6 +1,6 @@
 const data = [
   {
-    id: '0000000001',
+    id: 'L1',
     title: 'First List',
     todos: [{
       id: '1',
@@ -8,7 +8,7 @@ const data = [
       text: 'First todo of first list!'
     }],
   }, {
-    id: '0000000002',
+    id: 'L2',
     title: 'Second List',
     todos: [{
       id: '1',
