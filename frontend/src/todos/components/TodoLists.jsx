@@ -25,7 +25,7 @@ export const TodoLists = ({ style }) => {
   if (isLoading || !lists.length) return null
   return (
     <Fragment>
-      <Card style={style}>
+      <Card style={{ margin: '1rem' }}>
         <CardContent>
           <Typography component='h2'>My Todo Lists</Typography>
           <List>

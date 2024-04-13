@@ -24,7 +24,7 @@ const App = () => {
           maxWidth="80rem"
           flexGrow={1}
         >
-          <TodoLists style={{ margin: '1rem' }} />
+          <TodoLists />
         </Box>
       </Box>
     </Box>
