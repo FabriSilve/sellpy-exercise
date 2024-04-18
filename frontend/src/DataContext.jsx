@@ -23,6 +23,7 @@ export const DataContext = ({ children }) => {
 
   const [todos, setTodos] = useState([])
   const [todoToUpdate, setTodoToUpdate] = useState(null)
+  const [timeoutId, setTimeoutId] = useState(null)
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -67,18 +68,13 @@ export const DataContext = ({ children }) => {
 
   const updateTodoDelayed = useCallback((todo) => {
     if (!activeList) return
-    setTodoToUpdate(todo)
+    if (timeoutId) clearTimeout(timeoutId)
     setTodos(todos.map((t) => t.id === todo.id ? todo : t))
-  }, [setTodoToUpdate, activeList, todos])
-
-  useEffect(() => {
-    const timeoutID = setTimeout(async () => {
-      if (!activeList || !todoToUpdate) return
-      const data = await updateTodoApi(activeList.id, todoToUpdate)
-      setTodos(data)
+    const newTimeoutId = setTimeout(async () => {
+      await updateTodoApi(activeList.id, todo)
     }, 500);
-    return () => clearTimeout(timeoutID);
-  }, [todoToUpdate, activeList]);
+    setTimeoutId(newTimeoutId)
+  }, [activeList, todos, timeoutId, setTimeoutId])
 
   const updateTodo = useCallback((todo) => {
     const updateTodoRequest = async () => {
