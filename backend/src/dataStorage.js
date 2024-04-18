@@ -11,7 +11,7 @@ const data = [
     id: 'L2',
     title: 'Second List',
     todos: [{
-      id: `${Date.now()}`,
+      id: `${Date.now() + 1}`,
       done: false,
       text: 'First todo of second list!',
     }],
