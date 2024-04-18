@@ -22,7 +22,6 @@ export const DataContext = ({ children }) => {
   const [activeList, setActiveList] = useState(null)
 
   const [todos, setTodos] = useState([])
-  const [todoToUpdate, setTodoToUpdate] = useState(null)
   const [timeoutId, setTimeoutId] = useState(null)
 
   useEffect(() => {
